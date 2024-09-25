@@ -1,7 +1,7 @@
 import React from 'react';
 
 import type { ParkInt } from '../interfaces/ParkInt';
-import { createPark } from '../api/parkApi.js';
+import { createPark } from '../api/parkAPI.js';
 // import type { Trip } from '../interfaces/Trip';
 // import auth from '../utils/auth';
 

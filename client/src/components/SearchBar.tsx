@@ -3,7 +3,7 @@ import { Trail } from "../interfaces/Trail";
 import TrailList from "./TrailList"
 import { ParkInt } from "../interfaces/ParkInt";
 import ParkList from "./ParkList";
-import { fetchParkByCityName } from "../api/parkApi";
+import { fetchParkByCityName } from "../api/parkAPI";
 import { fetchTrailsByCity } from "../api/trailsAPI";
 
 
