@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }from 'react';
 
 import type { ParkInt } from '../interfaces/ParkInt';
 import { createPark } from '../api/parkAPI.js';
@@ -14,11 +14,16 @@ interface ParkListProps {
 
 const TrailList: React.FC<ParkListProps> = ({ parks }) => {
     // const [trips, setTrips] = useState<Trip[]>([]);
+    const [addedParks, setAddedParks] = useState<{ [key: number]: boolean }>({});
 
-
-    const handleAddToTrips = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>,parkName: string,parkURL: string,parkDescription: string,parkState: string,parkImage: string) => {
+    const handleAddToTrips = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, parkId: number, parkName: string, parkURL: string, parkDescription: string, parkState: string, parkImage: string) => {
         e.preventDefault();
         // const form = e.currentTarget.closest('form');
+        setAddedParks((prevState) => ({
+            ...prevState,
+            [parkId]: true
+        }));
+
         const parkData = {
             username_id: 1,
             name: parkName,
@@ -46,9 +51,8 @@ const TrailList: React.FC<ParkListProps> = ({ parks }) => {
                 <div className="row mt-3 mx-3" id="searchResults">
                     <div className="card mt-2">
                         <div className="card-body row">
-                            <img className ="col-2 card-img-top" src={park.images} alt="..."/>
+                        <img className="col-2" src={park.images} alt={park.name} style={{ width: '20%', height: 'auto', objectFit: 'cover' }} />
                             <div className="col-10" id = "card-info">
-                                <h5 className="card-title">Park Name</h5>
                                 <form action = "" id = {park.id?.toString()}>
                                     <p className="card-text">
                                         <strong>Park Name:</strong> {park.name} <br />
@@ -57,10 +61,13 @@ const TrailList: React.FC<ParkListProps> = ({ parks }) => {
                                         <strong>State:</strong> {park.states} <br />
                                     </p>
 
-                                    <button className="btn btn-primary" onClick = {(e) => handleAddToTrips(e,park.name,park.url,park.description,park.states,park.images)}>Add To Trips</button>
-                                    
-                                    {/* <!-- Once added the button will turn grey and text change to added and also disabled--> */}
-                                    <a href="#" className="btn btn-secondary disabled">Added</a>
+                                    <button
+                                        className={addedParks[park.id!] ? 'btn btn-secondary disabled' : 'btn btn-primary'}
+                                        disabled={!!addedParks[park.id!]} // Disable button only if this park has been added
+                                        onClick={(e) => handleAddToTrips(e, park.id!, park.name, park.url, park.description, park.states, park.images)}
+                                    >
+                                            {addedParks[park.id!] ? 'Added' : 'Add to Trip'}
+                                    </button>
                                 </form>
                             </div>
                         </div>
