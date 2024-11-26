@@ -32,11 +32,11 @@ To get started with the Trip Planner application, follow these steps:
     ```
 3. Install dependencies:
     ```bash
-    npm install
+    npm run install
     ```
 4. Start the development server:
     ```bash
-    npm start
+    npm run start:dev
     ```
 ## Usage
 
